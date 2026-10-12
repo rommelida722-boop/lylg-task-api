@@ -5,7 +5,14 @@ const express = require('express');
 const { register, login, authMiddleware } = require('./auth');
 
 // 引入任务相关函数
-const { createTask, listTasks, updateTask, deleteTask, getTask } = require('./tasks');
+const {
+  createTask,
+  listTasks,
+  updateTask,
+  deleteTask,
+  getTask,
+  userTasks,
+} = require('./tasks');
 
 // 创建路由实例
 const router = express.Router();
@@ -91,12 +98,20 @@ router.delete('/tasks/:id', (req, res) => {
 router.get('/tasks/:id', (req, res) => {
   // 调用 getTask
   const result = getTask(req.params.id);
-  if (result){
+  if (result) {
     // 返回任务详情
     res.json(result);
   } else {
     res.status(404).json({ message: '任务不存在' });
   }
+});
+
+// 用户任务列表：GET /api/tasks/user/:id
+router.get('/tasks/user/:id', (req, res) => {
+  // 调用 userTasks，传入用户 ID
+  const result = userTasks(req.params.id);
+  // 直接返回任务数组，没有任务时返回空数组 []
+  res.json(result);
 });
 
 // 导出路由
