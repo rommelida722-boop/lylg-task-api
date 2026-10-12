@@ -66,12 +66,28 @@ function deleteTask(userId, id) {
 
 // 显示任务详情
 function getTask(id) {
-  // 先筛选出属于当前用户的任务
-  let result = tasks.filter(t => t.id === Number(id));
-  
-  // 返回当前页的数据
+  // 根据 ID 查找任务
+  const result = tasks.filter(t => t.id === Number(id));
+
+  // 返回任务对象，找不到返回 null
   return result.length > 0 ? result[0] : null;
 }
 
+// 查看指定用户的任务列表
+function userTasks(userId) {
+  // 将传入的 userId 转为数字，确保与任务中的 userId 类型一致
+  const uid = Number(userId);
+
+  // 返回该用户的所有任务数组（没有任务时返回空数组）
+  return tasks.filter(t => t.userId === uid);
+}
+
 // 导出所有任务操作函数
-module.exports = { createTask, listTasks, updateTask, deleteTask, getTask };
+module.exports = {
+  createTask,
+  listTasks,
+  updateTask,
+  deleteTask,
+  getTask,
+  userTasks,
+};

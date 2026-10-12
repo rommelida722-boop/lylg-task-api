@@ -5,10 +5,10 @@ name: Node CI
 on:
   # 推送到 main 分支时触发
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   # 针对 main 分支的 PR 时触发
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
   # 允许手动触发
   workflow_dispatch:
 
